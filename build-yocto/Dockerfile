@@ -1,15 +1,42 @@
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get -y upgrade
 
 # Required Packages for the Host Development System
-# http://www.yoctoproject.org/docs/latest/mega-manual/mega-manual.html#required-packages-for-the-host-development-system
-RUN apt-get install -y gawk wget git-core diffstat unzip texinfo gcc-multilib \
-        build-essential chrpath socat cpio python3 python3-pip python3-pexpect python-is-python3 \
-        xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev \
-        pylint3 xterm
+# https://docs.yoctoproject.org/ref-manual/system-requirements.html
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+	gawk \
+	wget \
+	git \
+	diffstat \
+	unzip \
+	texinfo \
+	gcc \
+	build-essential \
+	chrpath \
+	socat \
+	cpio \
+	python3 \
+	python3-pip \
+	python3-pexpect \
+	xz-utils \
+	debianutils \
+	iputils-ping \
+	python3-git \
+	python3-jinja2
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get install	-y \ 
+	libegl1-mesa \
+	libsdl1.2-dev \
+	pylint3 xterm \
+	python3-subunit \
+	mesa-common-dev \
+	zstd \
+	liblz4-tool
 
 # Additional host packages required by poky/scripts/wic
 RUN apt-get install -y curl dosfstools mtools parted syslinux tree zip
